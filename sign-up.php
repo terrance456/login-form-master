@@ -200,7 +200,8 @@ document.querySelector(".input-group #password").addEventListener("keyup",functi
     </div>
          
          <input type="submit" name="signup-submit" value="Signup" class="submit-btn"><br><br>
-      <a href="index.php" class="forgot-pw">Already have an account?</a> 
+         <a href="index.php" class="forgot-pw">Already have an account?</a> 
+  
       
    
    
