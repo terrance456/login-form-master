@@ -29,7 +29,7 @@
 
 	} else{
 
-	mysqli_stmt_bind_param($stmt, "s" $selector);
+	mysqli_stmt_bind_param($stmt, "s", $selector);
 	mysqli_stmt_execute($stmt);
 
 	$result = mysqli_stmt_get_result($stmt);
@@ -89,7 +89,7 @@
 				exit();
 				} else{
 
-				mysqli_stmt_bind_param($stmt, "s" $tokenEmail);
+				mysqli_stmt_bind_param($stmt, "s", $tokenEmail);
 				mysqli_stmt_execute($stmt);
 				header("Location: ../signup.php?newpwd=passwordupdated");
 			}

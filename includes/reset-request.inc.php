@@ -1,4 +1,5 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;  
 if(isset($_POST["reset-request-submit"])) {
 
 $selector = bin2hex(random_bytes(8));
@@ -43,21 +44,41 @@ if (!mysqli_stmt_prepare($stmt,$sql)) {
 mysqli_stmt_close($stmt);
 mysqli_close($conn);
 
-$to = $userEmail;
+require_once "PHPMailer/PHPMailer.php";
+require_once "PHPMailer/SMTP.php";
+require_once "PHPMailer/Exception.php";
 
-$subject = 'Reset your password for localhost';
+$mail = new PHPMailer();
 
-$message = '<p>We received a password reset request. The link to reset your password is below if you did not make this request, you can ignore this email</p>';
-$message .='<p>Here is your password reset link: </br>';
-$message .= '<a href="' .$url .'">' .$url . '</a></p>';
+//SMTP Settings
+$mail->isSMTP();
+$mail->Host = "smtp.gmail.com";
+$mail->SMTPAuth = true;
+$mail->Username = "knavin393@gmail.com"; //enter you email address
+$mail->Password = 'Manchula'; //enter you email password
+$mail->Port = 465;
+$mail->SMTPSecure = "ssl";
 
-$header = "From: localhost <knavin393@gmail.com>\r\n";
-$header .="Reply-To:knavin393@gmail.com\r\n";
-$header .="Content-type: text/html\r\n";
+//Email Settings
+$mail->isHTML(true);
+$mail->setFrom("knavin393@gmail.com", "Navin Login");
+$mail->addAddress($userEmail);
+//$mail->AddAttachment($file_name);
+$mail->Subject = ("Reset your password for localhost");
+$mail->Body =   "We received a password reset request. The link to reset your password is below if you did not make this request, you can ignore this email $url" ;
 
-mail($to, $subject, $message, $headers);
 
-header("Location: ../index.php?reset-success");
+					
+
+					
+if ($mail->send() ) {
+	
+	header("Location: ../index.php?reset-success");
+	
+} else {
+	echo "Email failed";
+}
+
 
 } else{
 
